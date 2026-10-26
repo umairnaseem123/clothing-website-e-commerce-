@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===== Clothing store models =====
+
+enum Size {
+  S
+  M
+  L
+  XL
+}
+
+enum ImageView {
+  FRONT
+  SIDE
+  BACK
+  EXTRA
+}
+
+enum PaymentMethod {
+  COD
+  BANK_TRANSFER
+  EASYPAISA
+  JAZZCASH
+  ADVANCE
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum OrderStatus {
+  NEW
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+// Product groups shown on the left sidebar (Men, Women, Lounge Wear, New Arrivals ...)
+model Category {
+  id        Int               @id @default(autoincrement())
+  name      String
+  slug      String            @unique
+  sortOrder Int               @default(0)
+  isActive  Boolean           @default(true)
+  products  ProductCategory[]
+}
+
+model Product {
+  id          Int               @id @default(autoincrement())
+  name        String
+  slug        String            @unique
+  description String?
+  price       Int // PKR
+  discountPct Int               @default(0) // 0-100
+  color       String? // e.g. "Navy", used by the color filter
+  colorHex    String? // e.g. "#1f2a44", used for the swatch
+  isActive    Boolean           @default(true)
+  createdAt   DateTime          @default(now())
+  categories  ProductCategory[] // one product can sit in many groups
+  images      ProductImage[]
+  variants    ProductVariant[]
+  orderItems  OrderItem[]
+}
+
+// Many-to-many link: same product can appear in Men, Lounge Wear and New Arrivals
+model ProductCategory {
+  productId  Int
+  categoryId Int
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+}
+
+// FRONT, SIDE and BACK images power the rotation view
+model ProductImage {
+  id        Int       @id @default(autoincrement())
+  productId Int
+  url       String
+  view      ImageView @default(EXTRA)
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductVariant {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  size      Size
+  stock     Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, size])
+}
+
+// Homepage banner slides
+model Banner {
+  id        Int     @id @default(autoincrement())
+  title     String
+  subtitle  String?
+  imageUrl  String
+  link      String?
+  sortOrder Int     @default(0)
+  isActive  Boolean @default(true)
+}
+
+model Order {
+  id            Int           @id @default(autoincrement())
+  customerName  String
+  phone         String
+  email         String?
+  city          String
+  address       String
+  note          String?
+  paymentMethod PaymentMethod
+  paymentStatus PaymentStatus @default(PENDING)
+  paymentRef    String? // EasyPaisa / bank transaction ID
+  status        OrderStatus   @default(NEW)
+  subtotal      Int
+  shipping      Int           @default(0)
+  total         Int
+  createdAt     DateTime      @default(now())
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  size      Size
+  quantity  Int
+  unitPrice Int // price after discount, saved at order time
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
