@@ -49,3 +49,5 @@ next-env.d.ts
 /.devin/
 
 !.env.example
+.vercel
+.env*

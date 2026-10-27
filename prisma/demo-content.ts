@@ -1,7 +1,7 @@
 // Fills demo colors on products and sets proper banner copy.
 // Safe to run more than once. Real values will come from the admin panel later.
 import { existsSync, readFileSync } from "node:fs";
-import { PrismaClient } from "../src/generated/prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 // Load .env without needing extra packages
 if (existsSync(".env")) {

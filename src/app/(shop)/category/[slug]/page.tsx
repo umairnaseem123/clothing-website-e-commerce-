@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
-import type { Size } from "@/generated/prisma/enums";
+import type { Size } from "@prisma/client";
 import ProductCard from "@/components/ProductCard";
 import SortSelect from "@/components/SortSelect";
 import { finalPrice } from "@/lib/format";

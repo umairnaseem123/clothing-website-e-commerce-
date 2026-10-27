@@ -2,7 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { finalPrice } from "@/lib/format";
 import { shippingFor } from "@/lib/shipping";
-import type { PaymentMethod, Size } from "@/generated/prisma/enums";
+import type { PaymentMethod, Size } from "@prisma/client";
 
 const METHODS: PaymentMethod[] = ["COD", "EASYPAISA", "JAZZCASH", "BANK_TRANSFER"];
 const SIZES: Size[] = ["S", "M", "L", "XL"];
