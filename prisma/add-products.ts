@@ -15,12 +15,11 @@ const items = [
     groups: ["Men", "Women", "New Arrivals"],
     stock: { S: 1, M: 6, L: 17, XL: 3 },
     images: [
-      ["FRONT", 2],
+      ["FRONT", 5],
+      ["EXTRA", 2],
       ["BACK", 6],
-      ["EXTRA", 1],
       ["EXTRA", 3],
       ["EXTRA", 4],
-      ["EXTRA", 5],
     ],
   },
   {
@@ -33,10 +32,9 @@ const items = [
     groups: ["Men", "New Arrivals"],
     stock: { S: 10, M: 10, L: 10, XL: 10 },
     images: [
-      ["FRONT", 1],
-      ["SIDE", 2],
-      ["EXTRA", 3],
-      ["EXTRA", 4],
+      ["FRONT", 2],
+      ["EXTRA", 1],
+      ["SIDE", 3],
       ["EXTRA", 5],
     ],
   },
