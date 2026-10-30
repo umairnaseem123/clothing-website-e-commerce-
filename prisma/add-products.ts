@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 // Edit prices here (testing: Rs 300 wholesale rate used for both)
 const items = [
   {
-    name: "H&A Happy Together Printed T-Shirt",
+    name: "Happy Together Printed T-Shirt",
     slug: "happy-together-printed-tshirt",
-    description: "Branded H&A Happy Together printed oversized tee.",
+    description: "Happy Together printed oversized tee.",
     price: 300,
     color: "Orange",
     colorHex: "#e8743b",

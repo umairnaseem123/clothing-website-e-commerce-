@@ -68,11 +68,11 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       const p = products.find((x) => x.id === it.productId);
       const v = p?.variants.find((x) => x.size === it.size);
       if (!p || !v) return fail("An item in your cart is no longer available. Please remove it and try again.");
-      if (v.stock > 0 && it.qty > v.stock) return fail(`Only ${v.stock} left of ${p.name} in size ${it.size}.`);
+      if (it.qty > v.stock) return fail(v.stock === 0 ? `${p.name} in size ${it.size} is sold out.` : `Only ${v.stock} left of ${p.name} in size ${it.size}.`);
       lines.push({
         productId: p.id,
         variantId: v.id,
-        trackStock: v.stock > 0,
+        trackStock: true,
         name: p.name,
         size: it.size as Size,
         qty: it.qty,
