@@ -268,3 +268,10 @@
 .k-done-actions a, .k-checkout-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; text-decoration: none; }
 .k-checkout-btn { display: flex; width: 100%; }
 @media (max-width: 600px) { .k-checkout { grid-template-columns: 1fr; } }
+/* ---------- Product layout toggle ---------- */
+.k-viewbar { display: flex; justify-content: flex-end; gap: 8px; margin: 0 0 14px; }
+.k-viewbtn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--k-line); background: #fff; color: var(--k-ink); cursor: pointer; padding: 0; }
+.k-viewbtn[aria-pressed="true"] { border-color: var(--k-ink); background: var(--k-ink); color: #fff; }
+.grid.k-large { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.grid.k-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 900px) { .grid.k-compact { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; } }

@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import type { Size } from "@prisma/client";
 import ProductCard from "@/components/ProductCard";
+import ProductGrid from "@/components/ProductGrid";
 import SortSelect from "@/components/SortSelect";
 import { finalPrice } from "@/lib/format";
 
@@ -73,11 +74,7 @@ export default async function CategoryPage({
         </Suspense>
       </div>
       {items.length ? (
-        <div className="grid">
-          {items.map((p, i) => (
-            <ProductCard key={p.slug} p={p} i={i} />
-          ))}
-        </div>
+        <ProductGrid>{items.map((p, i) => (<ProductCard key={p.slug} p={p} i={i} />))}</ProductGrid>
       ) : (
         <p className="empty">No products match these filters. Try clearing them.</p>
       )}
