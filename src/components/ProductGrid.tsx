@@ -5,7 +5,7 @@ type View = "large" | "compact";
 const KEY = "kalite_grid_view";
 
 export default function ProductGrid({ children }: { children: React.ReactNode }) {
-  const [view, setView] = useState<View>("large");
+  const [view, setView] = useState<View>("compact");
 
   useEffect(() => {
     try {
